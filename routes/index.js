@@ -65,7 +65,7 @@ router.get('/studentprogress/:course_id', async (req, res, next) => {
   try {
     const authtoken = req.headers.authorization.split(" ").pop();
     const response = await canvasAPI({
-      url: `/courses/${req.params.course_id}/bulk_user_progress`,
+      url: `/courses/${req.params.course_id}/bulk_user_progress?per_page=100`,
       headers: {
         Authorization: `Bearer ${authtoken}`
       }
