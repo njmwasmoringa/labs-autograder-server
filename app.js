@@ -34,7 +34,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(cors({
-  origin: "http://localhost:3045"
+  origin: ["https://autograder.picpazz.com","http://localhost:3045"]
 }));
 
 app.use('/', indexRouter);
