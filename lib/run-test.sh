@@ -82,8 +82,10 @@ if [ -f "package.json" ]; then
         # npm install jest-junit
         # npx react-scripts test --coverage --ci --testResultsProcessor="jest-junit" --watchAll=false
         # npm test -- --watchAll=false --no-color 2> tests.txt  
-        echo "**stack**react**stack**"  
-        labresult=$(npx react-scripts test --watchAll=false)
+        echo "**stack**react**stack**"
+        # npm test  --watchAll=false > test
+        labresult=$(npx react-scripts test --watchAll=false --json)
+        echo "**-----react_test_report-------**"
         tests=$($labresult | base64)
         echo $labresult
     else

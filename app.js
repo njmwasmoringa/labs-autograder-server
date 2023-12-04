@@ -44,6 +44,10 @@ app.use('/users', usersRouter, (user, req, res, next) => {
 
     if(!graddingServices[user.id]){
       addGradingService(user.id, req.body.authtoken);
+      graddingServices[user.id]
+      /* .send(JSON.stringify({
+        action:"serviceStatus"
+      })); */
     }
   
     res.status(200).json(user);
