@@ -16,11 +16,14 @@ var socket = client.connect("http://localhost:3130");
 socket.emit("test", "foo"); */
 
 var graddingServices = {};
-function addGradingService(user, token){
-  const cp = fork(path.join(__dirname, "/lib/grading-service.js"), [user, token]);
-  graddingServices[user] = cp;
-  /* graddingServices[user].on("message", (msg)=>console.log(msg));
-  graddingServices[user].on("exit", (msg)=>console.log(msg)); */
+function addGradingService(user, token, username){
+  const connect = ()=>fork(path.join(__dirname, "/lib/grading-service/index.js"), [user, token, username]);
+  graddingServices[user] = connect();
+  graddingServices[user].on("message", (msg)=>console.log(msg));
+  graddingServices[user].on("exit", (msg)=>{
+    console.log(user, "Existed");
+    connect();
+  });
 }
 
 // view engine setup
@@ -43,7 +46,7 @@ app.use('/users', usersRouter, (user, req, res, next) => {
   try{
 
     if(!graddingServices[user.id]){
-      addGradingService(user.id, req.body.authtoken);
+      addGradingService(user.id, req.body.authtoken, user.name);
       graddingServices[user.id]
       /* .send(JSON.stringify({
         action:"serviceStatus"

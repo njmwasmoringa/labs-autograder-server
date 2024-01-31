@@ -55,6 +55,7 @@ fi
 cat logs.txt
 
 cd $reponame
+pwd
 
 #inpect the package.json file to determine if it's react
 isReactApp=0
@@ -97,7 +98,15 @@ if [ -f "package.json" ]; then
         echo $labresult
     fi
 
+elif [ -f "Pipfile" ]; then
     # echo labresult
+    echo "**stack**python**stack**"
+    echo "Installing Python packages remotely..."
+    pipenv install
+    pipenv run pip install pytest-json-report 
+    pipenv run pytest --json-report
+    echo "**-----python_test_report-------**"
+    cat .report.json
 
 else
     echo "**stack**ruby**stack**"
@@ -120,7 +129,6 @@ fi
     
 # tests=$(cat ./lab-test-results.json)
 
-
 # apiresponse=$(curl -X POST \
 #     -H "Authorization: Bearer $job_auth_token" \
 #     -d "tests=$tests" $apihost)
@@ -130,6 +138,6 @@ fi
 
 #cleaning up
 cd $installPath
-rm -r -f $username
+rm -fr $username
 
 echo "--__the-__-end-___-"
