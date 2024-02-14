@@ -22,7 +22,11 @@ app.set('port', port);
 var server = http.createServer(app);
 WSServer(server, {
   cors: {
-    origin: ["https://autograder.picpazz.com", "http://localhost:3045", "http://localhost:3130"],
+    origin: (origin, callback)=>{
+      if(["https://autograder.picpazz.com", "http://localhost:3045", "http://localhost:3130"].includes(origin)){
+        callback(origin)
+      }
+    },
     credentials: true, //access-control-allow-credentials:true
     optionSuccessStatus: 200,
   }
