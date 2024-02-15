@@ -107,6 +107,7 @@ elif [ -f "Pipfile" ]; then
     pipenv run pytest --json-report
     echo "**-----python_test_report-------**"
     cat .report.json
+    pipenv --rm
 
 else
     echo "**stack**ruby**stack**"
